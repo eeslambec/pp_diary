@@ -1,8 +1,8 @@
-package uz.ppdiary.pp_diary.util.annotation;
+package uz.ppdiary.pp_diary.utils.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import uz.ppdiary.pp_diary.util.validation.EmailValidator;
+import uz.ppdiary.pp_diary.utils.validation.EmailValidator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

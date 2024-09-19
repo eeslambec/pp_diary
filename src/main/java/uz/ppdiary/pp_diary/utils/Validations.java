@@ -1,4 +1,4 @@
-package uz.ppdiary.pp_diary.util;
+package uz.ppdiary.pp_diary.utils;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.experimental.UtilityClass;

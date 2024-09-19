@@ -2,7 +2,7 @@ package uz.ppdiary.pp_diary.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import uz.ppdiary.pp_diary.util.annotation.ValidPassword;
+import uz.ppdiary.pp_diary.utils.annotation.ValidPassword;
 
 @AllArgsConstructor
 @Getter

@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uz.ppdiary.pp_diary.entity.auditing.Auditing;
+import uz.ppdiary.pp_diary.entity.enums.AttachmentStatus;
 
 @Builder
 @Setter
@@ -21,8 +22,10 @@ public class Attachment extends Auditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String originalName;
     private String name;
-    private String path;
-    private String contentType;
+    private String type;
     private Long size;
+    private String path;
+    AttachmentStatus status;
 }
