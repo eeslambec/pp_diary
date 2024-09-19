@@ -30,7 +30,7 @@ public class User extends Auditing {
     private String password;
     private String email;
     private String fullName;
-    private UserStatus userStatus;
+    private UserStatus status;
     @OneToMany
     private List<Diary> diaries;
     @ManyToMany

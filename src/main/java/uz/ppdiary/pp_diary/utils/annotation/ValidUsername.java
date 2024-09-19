@@ -1,8 +1,8 @@
-package uz.ppdiary.pp_diary.util.annotation;
+package uz.ppdiary.pp_diary.utils.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import uz.ppdiary.pp_diary.util.validation.PasswordValidator;
+import uz.ppdiary.pp_diary.utils.validation.UsernameValidator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD,ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = PasswordValidator.class)
-public @interface ValidPassword {
+@Constraint(validatedBy = UsernameValidator.class)
+public @interface ValidUsername {
     String message() default "";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

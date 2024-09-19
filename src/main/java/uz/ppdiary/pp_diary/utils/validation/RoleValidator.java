@@ -1,16 +1,16 @@
-package uz.ppdiary.pp_diary.util.validation;
+package uz.ppdiary.pp_diary.utils.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import uz.ppdiary.pp_diary.exceptions.InvalidDataException;
 import uz.ppdiary.pp_diary.exceptions.MissingFieldException;
-import uz.ppdiary.pp_diary.util.annotation.ValidUsername;
+import uz.ppdiary.pp_diary.utils.annotation.ValidRole;
 
-public class UsernameValidator implements ConstraintValidator<ValidUsername,String> {
+public class RoleValidator implements ConstraintValidator<ValidRole, String> {
     private boolean required;
 
     @Override
-    public void initialize(ValidUsername constraintAnnotation) {
+    public void initialize(ValidRole constraintAnnotation) {
         this.required = constraintAnnotation.required();
     }
 
@@ -21,7 +21,7 @@ public class UsernameValidator implements ConstraintValidator<ValidUsername,Stri
         if (value == null)
             throw new MissingFieldException(context.getDefaultConstraintMessageTemplate());
 
-        if (value.matches("^[a-zA-Z0-9_-]{3,20}$"))
+        if (value.matches("^ROLE_[A-Z]+$"))
             return true;
 
         throw new InvalidDataException(context.getDefaultConstraintMessageTemplate());
