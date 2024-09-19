@@ -1,1 +1,14 @@
-spring.application.name=pp_diary
+spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: abduganiyev.ismoil001@gmail.com
+    password: lkeu ioml dypp zwed
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+  profiles:
+    active: loc

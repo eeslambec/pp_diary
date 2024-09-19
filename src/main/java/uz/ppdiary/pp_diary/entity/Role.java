@@ -9,7 +9,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import uz.ppdiary.pp_diary.entity.auditing.Auditing;
 
 @Builder
 @Setter
@@ -17,12 +16,10 @@ import uz.ppdiary.pp_diary.entity.auditing.Auditing;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Attachment extends Auditing {
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String path;
-    private String contentType;
-    private Long size;
+    private String role;
+    private String description;
 }
