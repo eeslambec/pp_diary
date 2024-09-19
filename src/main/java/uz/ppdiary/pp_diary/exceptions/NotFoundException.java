@@ -1,4 +1,4 @@
-package uz.ppdiary.pp_diary.entity.exceptions;
+package uz.ppdiary.pp_diary.exceptions;
 
 public class NotFoundException extends RuntimeException {
     public NotFoundException(String m) {

@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.ppdiary.pp_diary.entity.auditing.Auditing;
 import uz.ppdiary.pp_diary.entity.enums.UserStatus;
 
 import java.util.List;
@@ -21,7 +22,7 @@ import java.util.List;
 @Entity(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User extends Auditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,4 +39,6 @@ public class User {
     private List<User> following;
     @ManyToMany
     private List<User> friends;
+    @OneToMany
+    private List<Role> roles;
 }

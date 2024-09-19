@@ -10,6 +10,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.ppdiary.pp_diary.entity.auditing.Auditing;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Comment {
+public class Comment extends Auditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

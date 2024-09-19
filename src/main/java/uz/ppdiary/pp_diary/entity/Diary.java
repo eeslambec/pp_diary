@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uz.ppdiary.pp_diary.entity.auditing.Auditing;
 import uz.ppdiary.pp_diary.entity.enums.DiaryStatus;
 
 import java.time.LocalDate;
@@ -22,7 +23,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Diary {
+public class Diary extends Auditing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
