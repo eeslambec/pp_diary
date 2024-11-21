@@ -18,6 +18,7 @@ import uz.ppdiary.pp_diary.security.jwt.JwtTokenProvider;
 import uz.ppdiary.pp_diary.service.UserService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .email(dto.getEmail())
                 .fullName(dto.getFullName())
-                .userStatus(UserStatus.NOT_VERIFIED)
+                .status(UserStatus.NOT_VERIFIED)
                 .build());
 
         return new SuccessResponse("Email sent");
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
             User user = TEMP_USERS.get(email);
             if (user == null)
                 throw new NotFoundException("User");
-            user.setUserStatus(UserStatus.VERIFIED);
+            user.setStatus(UserStatus.VERIFIED);
             return new JwtDto(jwtTokenProvider.generateToken(userRepository.save(user)));
         }
         throw new InvalidDataException("verification code");
@@ -81,6 +82,22 @@ public class UserServiceImpl implements UserService {
     public UserDto getById(Long id) {
         return new UserDto(userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User")));
+    }
+
+    @Override
+    public List<UserDto> getAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(UserDto::new)
+                .toList();
+    }
+
+    @Override
+    public List<UserDto> getAllByStatus(UserStatus status) {
+        return userRepository.findAllByStatus(status)
+                .stream()
+                .map(UserDto::new)
+                .toList();
     }
 
     @Override

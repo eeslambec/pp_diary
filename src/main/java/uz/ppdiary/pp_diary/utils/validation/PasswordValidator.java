@@ -1,10 +1,10 @@
-package uz.ppdiary.pp_diary.util.validation;
+package uz.ppdiary.pp_diary.utils.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import uz.ppdiary.pp_diary.exceptions.InvalidDataException;
 import uz.ppdiary.pp_diary.exceptions.MissingFieldException;
-import uz.ppdiary.pp_diary.util.annotation.ValidPassword;
+import uz.ppdiary.pp_diary.utils.annotation.ValidPassword;
 
 public class PasswordValidator implements ConstraintValidator<ValidPassword, String> {
     private boolean required;

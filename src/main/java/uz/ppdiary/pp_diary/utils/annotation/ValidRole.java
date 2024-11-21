@@ -1,8 +1,8 @@
-package uz.ppdiary.pp_diary.util.annotation;
+package uz.ppdiary.pp_diary.utils.annotation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import uz.ppdiary.pp_diary.util.validation.RoleValidator;
+import uz.ppdiary.pp_diary.utils.validation.RoleValidator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
