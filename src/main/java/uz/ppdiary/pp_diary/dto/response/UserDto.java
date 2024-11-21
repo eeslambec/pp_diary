@@ -28,7 +28,7 @@ public class UserDto {
         this.password = user.getPassword();
         this.email = user.getEmail();
         this.fullName = user.getFullName();
-        this.userStatus = user.getUserStatus();
+        this.userStatus = user.getStatus();
         this.diaryIds = user.getDiaries().stream().map(Diary::getId).toList();
         this.followerIds = user.getFollowers().stream().map(User::getId).toList();
         this.followingIds = user.getFollowing().stream().map(User::getId).toList();
