@@ -1,11 +1,6 @@
 package uz.ppdiary.pp_diary.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,6 +24,8 @@ public class Diary extends Auditing {
     private Long id;
     private String title;
     private String text;
+    @ManyToOne
+    private User author;
     @OneToMany
     private List<Attachment> medias;
     @OneToMany
