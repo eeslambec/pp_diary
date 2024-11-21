@@ -14,7 +14,6 @@ import uz.ppdiary.pp_diary.repository.AttachmentRepository;
 import uz.ppdiary.pp_diary.repository.DiaryRepository;
 import uz.ppdiary.pp_diary.repository.UserRepository;
 import uz.ppdiary.pp_diary.service.DiaryService;
-import uz.ppdiary.pp_diary.util.Validations;
 import uz.ppdiary.pp_diary.utils.Validations;
 
 import java.util.ArrayList;
