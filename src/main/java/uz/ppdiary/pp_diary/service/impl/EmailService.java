@@ -6,6 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import uz.ppdiary.pp_diary.utils.annotation.ValidEmail;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class EmailService {
 
     @SneakyThrows
     @Async
-    public void send(String email) {
+    public void send(@ValidEmail String email) {
         TimeUnit.SECONDS.sleep(5);
         var helper = new MimeMessageHelper(javaMailSender.createMimeMessage());
         Integer code = codeGenerator();

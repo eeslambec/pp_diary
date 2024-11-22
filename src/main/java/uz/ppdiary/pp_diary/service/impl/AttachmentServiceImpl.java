@@ -1,5 +1,7 @@
 package uz.ppdiary.pp_diary.service.impl;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,7 +54,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public AttachmentDto getById(Long id) {
+    public AttachmentDto getById(@NotNull Long id) {
         Attachment attachment = attachmentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Attachment"));
 
@@ -60,7 +62,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public List<AttachmentDto> getAllByStatus(AttachmentStatus status) {
+    public List<AttachmentDto> getAllByStatus(@NotNull AttachmentStatus status) {
         return attachmentRepository.findAllByStatus(status)
                 .stream()
                 .map(AttachmentDto::new)
@@ -68,7 +70,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public void deleteById(Long id) throws IOException {
+    public void deleteById(@NotNull Long id) throws IOException {
         Attachment attachment = attachmentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Attachment"));
 
@@ -79,7 +81,7 @@ public class AttachmentServiceImpl implements AttachmentService {
         attachment.setStatus(AttachmentStatus.DELETED);
     }
 
-    private String getExtension(String contentType) {
+    private String getExtension(@NotBlank String contentType) {
         if (contentType != null) {
             return "." + contentType.substring(contentType.indexOf("/") + 1);
         }

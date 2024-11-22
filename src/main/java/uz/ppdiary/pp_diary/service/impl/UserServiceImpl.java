@@ -1,5 +1,6 @@
 package uz.ppdiary.pp_diary.service.impl;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import uz.ppdiary.pp_diary.exceptions.NotFoundException;
 import uz.ppdiary.pp_diary.repository.UserRepository;
 import uz.ppdiary.pp_diary.security.jwt.JwtTokenProvider;
 import uz.ppdiary.pp_diary.service.UserService;
+import uz.ppdiary.pp_diary.utils.annotation.ValidEmail;
+import uz.ppdiary.pp_diary.utils.annotation.ValidPassword;
 
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +34,7 @@ public class UserServiceImpl implements UserService {
     private static final Map<String, User> TEMP_USERS = new HashMap<>();
 
     @Override
-    public SuccessResponse register(UserRegisterDto dto) {
+    public SuccessResponse register(@NotNull UserRegisterDto dto) {
         if (userRepository.findByEmail(dto.getEmail()).isPresent())
             throw new AlreadyExistsException("User");
 
@@ -52,7 +55,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public JwtDto checkEmail(String email, Integer code) {
+    public JwtDto checkEmail(@ValidEmail String email, @NotNull Integer code) {
         if (emailService.check(code, email)) {
             User user = TEMP_USERS.get(email);
             if (user == null)
@@ -64,7 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public JwtDto login(UserLoginDto dto) {
+    public JwtDto login(@NotNull UserLoginDto dto) {
         User user;
         if (dto.getData().contains("@"))
             user = userRepository.findByEmail(dto.getData())
@@ -79,7 +82,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto getById(Long id) {
+    public UserDto getById(@NotNull Long id) {
         return new UserDto(userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("User")));
     }
@@ -93,7 +96,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAllByStatus(UserStatus status) {
+    public List<UserDto> getAllByStatus(@NotNull UserStatus status) {
         return userRepository.findAllByStatus(status)
                 .stream()
                 .map(UserDto::new)
@@ -101,7 +104,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SuccessResponse forgotPassword(String email) {
+    public SuccessResponse forgotPassword(@ValidEmail String email) {
         userRepository.findByEmail(email).orElseThrow(
                 () -> new NotFoundException("User"));
 
@@ -110,7 +113,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public SuccessResponse resetPassword(String email, Integer code, String newPassword) {
+    public SuccessResponse resetPassword(@ValidEmail String email, @NotNull Integer code, @ValidPassword String newPassword) {
         User user = userRepository.findByEmail(email).orElseThrow(
                 () -> new NotFoundException("User"));
 
