@@ -8,8 +8,8 @@ import uz.ppdiary.pp_diary.entity.enums.UserStatus;
 
 import java.util.List;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class UserDto {
     private Long id;
     private String username;

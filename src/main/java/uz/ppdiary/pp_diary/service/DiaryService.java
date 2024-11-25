@@ -9,9 +9,9 @@ import java.util.List;
 @Service
 public interface DiaryService {
     DiaryDto save(DiaryDto diaryDto);
-    DiaryDto update(DiaryUpdateDto diaryUpdateDto);
     DiaryDto getById(Long id);
-    List<DiaryDto> getAllByAuthorUsername(String username);
+    DiaryDto update(DiaryUpdateDto diaryUpdateDto);
     List<DiaryDto> getAll();
+    List<DiaryDto> getAllByAuthorUsername(String username);
     void deleteById(Long id);
 }

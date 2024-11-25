@@ -1,9 +1,11 @@
 package uz.ppdiary.pp_diary.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,20 +20,24 @@ import java.util.Objects;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
+public class CommentReaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String role;
-    private String description;
+
+    @ManyToOne
+    private Comment comment;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Reaction reaction;
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return Objects.equals(id, role.id);
+        CommentReaction that = (CommentReaction) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override

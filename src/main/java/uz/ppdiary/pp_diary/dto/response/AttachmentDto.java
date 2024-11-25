@@ -5,8 +5,8 @@ import lombok.Getter;
 import uz.ppdiary.pp_diary.entity.Attachment;
 import uz.ppdiary.pp_diary.entity.enums.AttachmentStatus;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class AttachmentDto {
     private Long id;
     private String originalName;

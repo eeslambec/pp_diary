@@ -13,6 +13,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class DiaryDto {
+    @NotBlank
     private String title;
     @NotBlank
     private String text;
@@ -20,7 +21,6 @@ public class DiaryDto {
     @NotBlank
     private String authorUsername;
     private List<String> mentionedUsersUsernames;
-    @NotBlank
     private LocalDate happenedDate;
     public DiaryDto(Diary diary) {
         this.title = diary.getTitle();
