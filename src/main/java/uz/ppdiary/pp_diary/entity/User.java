@@ -15,6 +15,7 @@ import uz.ppdiary.pp_diary.entity.auditing.Auditing;
 import uz.ppdiary.pp_diary.entity.enums.UserStatus;
 
 import java.util.List;
+import java.util.Objects;
 
 @Builder
 @Setter
@@ -41,4 +42,18 @@ public class User extends Auditing {
     private List<User> friends;
     @OneToMany
     private List<Role> roles;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(email, user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, email);
+    }
 }

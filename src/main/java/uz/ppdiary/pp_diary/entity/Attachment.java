@@ -12,6 +12,8 @@ import lombok.Setter;
 import uz.ppdiary.pp_diary.entity.auditing.Auditing;
 import uz.ppdiary.pp_diary.entity.enums.AttachmentStatus;
 
+import java.util.Objects;
+
 @Builder
 @Setter
 @Getter
@@ -28,4 +30,18 @@ public class Attachment extends Auditing {
     private Long size;
     private String path;
     AttachmentStatus status;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Attachment that = (Attachment) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
 }

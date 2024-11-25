@@ -5,8 +5,8 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class JwtDto {
     private String token;
     private final LocalDateTime timestamp = LocalDateTime.now();
