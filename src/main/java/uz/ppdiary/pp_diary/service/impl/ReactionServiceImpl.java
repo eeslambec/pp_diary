@@ -17,7 +17,7 @@ import uz.ppdiary.pp_diary.repository.ReactionRepository;
 import uz.ppdiary.pp_diary.repository.CommentRepository;
 import uz.ppdiary.pp_diary.repository.UserRepository;
 import uz.ppdiary.pp_diary.service.ReactionService;
-
+import uz.ppdiary.pp_diary.utils.SecurityUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -30,6 +30,7 @@ public class ReactionServiceImpl implements ReactionService {
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final ReactionRepository reactionRepository;
+    private final ReactionService reactionService;
 
     @Override
     public void addReactionToComment(Long commentId, ReactionType reactionType, Long userId) {
@@ -50,7 +51,6 @@ public class ReactionServiceImpl implements ReactionService {
 
         reactionRepository.save(commentReaction);
     }
-
 
     @Override
     public void removeReactionFromComment(Long commentId, ReactionType reactionType, Long userId) {
@@ -73,7 +73,6 @@ public class ReactionServiceImpl implements ReactionService {
                 .orElse(null);  // Если реакции нет, возвращаем null
     }
 
-
     @Override
     public Map<ReactionType, Long> countReactionsByType(Long commentId) {
         commentRepository.findById(commentId)
@@ -92,16 +91,18 @@ public class ReactionServiceImpl implements ReactionService {
     public Page<UserReactionsDto> findAllReactionsByUser(Long userId, Pageable pageable) {
         Page<Object[]> results = reactionRepository.findAllReactionsByUser(userId, pageable);
 
+        Long currentUserId = SecurityUtils.getCurrentUserId();
+
         return results.map(result -> {
             Comment comment = (Comment) result[0];
             ReactionType reactionType = (ReactionType) result[1];
 
-            //TODO: add current user reaction after adding security and JWT
-            CommentDto commentDto = new CommentDto(comment, Map.of(), null);
+            Map<ReactionType, Long> reactionCounts = reactionService.countReactionsByType(comment.getId());
+            ReactionType userReaction = reactionService.getUserReaction(comment.getId(), currentUserId);
+
+            CommentDto commentDto = new CommentDto(comment, reactionCounts, userReaction);
 
             return new UserReactionsDto(commentDto, reactionType);
         });
     }
-
-
 }

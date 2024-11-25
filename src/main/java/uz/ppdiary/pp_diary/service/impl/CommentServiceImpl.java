@@ -15,6 +15,7 @@ import uz.ppdiary.pp_diary.repository.CommentRepository;
 import uz.ppdiary.pp_diary.repository.UserRepository;
 import uz.ppdiary.pp_diary.service.CommentService;
 import uz.ppdiary.pp_diary.service.ReactionService;
+import uz.ppdiary.pp_diary.utils.SecurityUtils;
 import uz.ppdiary.pp_diary.utils.Validations;
 
 import java.util.Map;
@@ -89,9 +90,9 @@ public class CommentServiceImpl implements CommentService {
 
     private CommentDto mapToDtoWithReactions(Comment comment) {
         Map<ReactionType, Long> reactionCounts = reactionService.countReactionsByType(comment.getId());
-        // ReactionType userReaction = reactionService.getUserReaction(comment.getId(), getCurrentUserId());
-        // TODO: add current user reaction after adding security and JWT
-        return new CommentDto(comment, reactionCounts, null);
+        ReactionType userReaction = reactionService.getUserReaction(comment.getId(), SecurityUtils.getCurrentUserId());
+
+        return new CommentDto(comment, reactionCounts, userReaction);
     }
 
 }

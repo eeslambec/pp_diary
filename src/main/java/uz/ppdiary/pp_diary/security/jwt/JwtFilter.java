@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -17,6 +18,7 @@ import uz.ppdiary.pp_diary.service.UserService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NonNullApi
 @RequiredArgsConstructor
@@ -36,28 +38,30 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String token = request.getHeader(AUTHORIZATION);
         if (token != null && token.startsWith(BEARER)) {
-            token = token.split(" ")[1];
-            if (jwtTokenProvider.isValid(token)) {
+            token = token.substring(BEARER.length());
+            try {
                 Claims claims = jwtTokenProvider.parseAllClaims(token);
                 String subject = claims.getSubject();
                 if (subject != null) {
-                    try {
-                        Long userId = Long.parseLong(subject);
-                        UserDto user = userService.getById(userId);
-                        if (user != null) {
-                            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(
-                                    user.getId(),
-                                    null,
-                                    List.of(new SimpleGrantedAuthority("ROLE_USER"))
-                            ));
-                        }
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
+                    Long userId = Long.parseLong(subject);
+                    UserDto user = userService.getById(userId);
+                    if (user != null) {
+                        List<String> roles = claims.get("roles", List.class);
+                        List<GrantedAuthority> authorities = roles.stream()
+                                .map(SimpleGrantedAuthority::new)
+                                .collect(Collectors.toList());
+
+                        SecurityContextHolder.getContext().setAuthentication(
+                                new UsernamePasswordAuthenticationToken(user.getId(), null, authorities)
+                        );
                     }
                 }
+            } catch (Exception e) {
+                logger.error("Error processing JWT token", e);
             }
         }
 
         filterChain.doFilter(request, response);
     }
 }
+
