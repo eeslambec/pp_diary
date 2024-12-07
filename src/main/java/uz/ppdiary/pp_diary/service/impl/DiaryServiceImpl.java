@@ -3,6 +3,8 @@ package uz.ppdiary.pp_diary.service.impl;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import uz.ppdiary.pp_diary.dto.request.DiaryDto;
 import uz.ppdiary.pp_diary.dto.request.DiaryUpdateDto;
@@ -86,11 +88,8 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     @Override
-    public List<DiaryDto> getAll() {
-        return diaryRepository.findAll()
-                .stream()
-                .map(DiaryDto::new)
-                .toList();
+    public Page<DiaryDto> getAll(Pageable pageable) {
+        return diaryRepository.findAll(pageable).map(DiaryDto::new);
     }
 
     @Override
